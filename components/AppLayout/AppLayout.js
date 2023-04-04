@@ -18,6 +18,15 @@ export const AppLayout = ({
 	const { setPostsFromSSR, posts, getPosts, noMorePosts } =
 		useContext(PostsContext);
 
+	const apiUrl =
+		process.env.NODE_ENV === "development"
+			? "http://localhost:3000/api/auth/login"
+			: "https://blog-builder-ai-bhanu.vercel.app/api/auth/login";
+
+	const apiUrlLogOut =
+		process.env.NODE_ENV === "development"
+			? "http://localhost:3000/api/auth/logout"
+			: "https://blog-builder-ai-bhanu.vercel.app/api/auth/logout";
 	useEffect(() => {
 		setPostsFromSSR(postsFromSSR);
 		if (postId) {
@@ -77,13 +86,13 @@ export const AppLayout = ({
 							</div>
 							<div className="flex-1">
 								<div className="font-bold">{user.email}</div>
-								<Link className="text-sm" href="/api/auth/logout">
+								<a href={apiUrlLogOut} className="text-sm">
 									Logout
-								</Link>
+								</a>
 							</div>
 						</>
 					) : (
-						<Link href="/api/auth/login">LogIn</Link>
+						<a href={apiUrl}>LogIn</a>
 					)}
 				</div>
 			</div>
